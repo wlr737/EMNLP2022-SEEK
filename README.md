@@ -1,4 +1,4 @@
-# SEEK
+# Empathetic Dialogue Generation via Sensitive Emotion Recognition and Sensible Knowledge Selection (Findings of EMNLP 2022)
 This repository is the implementation of our EMNLP 2022 Paper: *Empathetic Dialogue Generation via Sensitive Emotion Recognition and Sensible Knowledge Selection*
 
 ![image-20221016141015236](fig/image-20221016141015236.png)
