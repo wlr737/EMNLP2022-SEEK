@@ -1178,16 +1178,7 @@ class SEEK(nn.Module):
 
         enc_outputs = enc_outputs.reshape(dim0_enc, dim1_enc * dim2_enc, -1)
         src_mask = src_mask.reshape(dim0_enc, 1, -1)
-        # enc_outputs = enc_outputs.transpose(1, 2).reshape(dim0_enc, dim1_enc * dim2_enc, -1)
-        # src_mask = src_mask.transpose(1, 2).reshape(dim0_enc, 1, -1)
         pre_logit, attn_dist = self.decoder(dec_emb, enc_outputs, (src_mask, mask_trg))
-        # if config.aggFea:
-        #     emo_emb_ = emo_emb.repeat([1, pre_logit.size()[1], 1])
-        #     # pre_logit = pre_logit * emo_emb_
-        #     know_outputs_ = know_outputs.repeat([1, pre_logit.size()[1], 1])
-        #     emo_know_cat = torch.cat((emo_emb_, know_outputs_), dim=-1)
-        #     g = self.sigmoid(self.layer_norm(self.feat_agg(emo_know_cat)))
-        #     pre_logit = pre_logit + g * emo_emb_ + (1 - g) * know_outputs_
 
         ## compute output dist
         logit = self.generator(
@@ -1235,15 +1226,11 @@ class SEEK(nn.Module):
         else:
             loss = emo_loss + gen_loss
 
-        # emo_loss = cls_loss
-        # loss = emo_loss + gen_loss
 
         if train:
             loss.backward()
             self.optimizer.step()
         return gen_loss.item(), gen_loss.item(), emo_loss.item(), accs, top_preds, comet_res
-        # return c_cls.item(), math.exp(
-        #     min(gen_loss.item(), 100)), emo_loss.item(), accs, top_preds, comet_res
 
     def compute_act_loss(self, module):
         R_t = module.remainders
